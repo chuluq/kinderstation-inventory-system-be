@@ -1,0 +1,430 @@
+openapi: 3.0.3
+info:
+  title: Inventory Management API
+  version: 1.0.0
+  description: API for managing inventory of kinderstation school
+  contact:
+    name: Moch Chaerul Chuluq
+    email: choirulchuluq10@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://kinderstation-inventory/api/v1
+
+paths:
+  ####################################################
+  # Categories
+  ####################################################
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Get all categories
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+    post:
+      tags:
+        - Categories
+      summary: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryCreate"
+      responses:
+        "201":
+          description: Category created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+
+  /categories/{id}:
+    get:
+      tags:
+        - Categories
+      summary: Get a category by ID
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Category details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+
+    put:
+      tags:
+        - Categories
+      summary: Update a category
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryUpdate"
+      responses:
+        "200":
+          description: Category updated
+
+    delete:
+      tags:
+        - Categories
+      summary: Delete a category
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Category deleted
+
+  ####################################################
+  # Items
+  ####################################################
+  /items:
+    get:
+      tags:
+        - Items
+      summary: Get all items
+      responses:
+        "200":
+          description: List of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+    post:
+      tags:
+        - Items
+      summary: Create a new item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemCreate"
+      responses:
+        "201":
+          description: Item created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /items/{id}:
+    get:
+      tags:
+        - Items
+      summary: Get an item by ID
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+    put:
+      tags:
+        - Items
+      summary: Update an item
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemUpdate"
+      responses:
+        "200":
+          description: Item updated
+
+    delete:
+      tags:
+        - Items
+      summary: Delete an item
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "204":
+          description: Item deleted
+
+  ####################################################
+  # Transactions
+  ####################################################
+  /transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Get all transactions
+      responses:
+        "200":
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+    post:
+      tags:
+        - Transactions
+      summary: Create a transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransactionCreate"
+      responses:
+        "201":
+          description: Transaction created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  /transactions/{id}:
+    get:
+      tags:
+        - Transactions
+      summary: Get transaction details
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: Transaction details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  ####################################################
+  # Users
+  ####################################################
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+    post:
+      tags:
+        - Users
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get a user by ID
+      parameters:
+        - $ref: "#/components/parameters/IdParam"
+      responses:
+        "200":
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+components:
+  ####################################################
+  # REUSABLE PARAMETERS
+  ####################################################
+  parameters:
+    IdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+
+  ####################################################
+  # SCHEMAS
+  ####################################################
+  schemas:
+    ##################
+    # Category Models
+    ##################
+    Category:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: string }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+
+    CategoryCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        description: { type: string }
+
+    CategoryUpdate:
+      type: object
+      properties:
+        name: { type: string }
+        description: { type: string }
+
+    ##################
+    # Item Models
+    ##################
+    Item:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        category_id: { type: integer }
+        quantity: { type: integer }
+        unit: { type: string }
+        stock: { type: integer }
+        location: { type: string }
+        condition_status:
+          type: string
+          enum: [good, damaged, lost]
+        purchase_date:
+          type: string
+          format: date
+        purchase_price:
+          type: number
+          format: decimal
+        supplier: { type: string }
+        notes: { type: string }
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ItemCreate:
+      type: object
+      required: [name, category_id, quantity]
+      properties:
+        name: { type: string }
+        category_id: { type: integer }
+        quantity: { type: integer }
+        unit: { type: string }
+        stock: { type: integer }
+        location: { type: string }
+        condition_status:
+          type: string
+          enum: [good, damaged, lost]
+        purchase_date:
+          type: string
+          format: date
+        purchase_price:
+          type: number
+        supplier: { type: string }
+        notes: { type: string }
+
+    ItemUpdate:
+      allOf:
+        - $ref: "#/components/schemas/ItemCreate"
+
+    ##################
+    # Transaction Models
+    ##################
+    Transaction:
+      type: object
+      properties:
+        id: { type: integer }
+        item_id: { type: integer }
+        transaction_type:
+          type: string
+          enum: [in, out]
+        quantity: { type: integer }
+        reference_number: { type: string }
+        performed_by: { type: string }
+        reason: { type: string }
+        transaction_date:
+          type: string
+          format: date-time
+
+    TransactionCreate:
+      type: object
+      required: [item_id, transaction_type, quantity]
+      properties:
+        item_id: { type: integer }
+        transaction_type:
+          type: string
+          enum: [in, out]
+        quantity: { type: integer }
+        reference_number: { type: string }
+        performed_by: { type: string }
+        reason: { type: string }
+
+    ##################
+    # User Models
+    ##################
+    User:
+      type: object
+      properties:
+        id: { type: integer }
+        username: { type: string }
+        full_name: { type: string }
+        role:
+          type: string
+          enum: [admin, user]
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    UserCreate:
+      type: object
+      required: [username, password_hash, role]
+      properties:
+        username: { type: string }
+        password_hash: { type: string }
+        full_name: { type: string }
+        role:
+          type: string
+          enum: [admin, user]
