@@ -12,3 +12,96 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique @db.VarChar(50)
+  password String 
+  name String @db.VarChar(100)
+  role UserRole @default(VIEWER)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN @map("admin")
+  STAFF @map("staff")
+  VIEWER @map("viewer")
+
+  @@map("role")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(100)
+  description String? @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  items Item[]
+
+  @@map("categories")
+}
+
+
+model Item {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(200)
+  categoryId Int? @map("category_id")
+  quantity Int @default(0)
+  unit String? @db.VarChar(50) // unit of measurement
+  stock Int @default(0)
+  location String? @db.VarChar(100)
+  conditionStatus ConditionStatus @default(GOOD) @map("condition_status")
+  purchaseDate DateTime? @map("purchase_date") @db.Date
+  purchasePrice Decimal? @map("purchase_price") @db.Decimal(10, 2)
+  supplier String? @db.VarChar(200)
+  notes String? @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  transactions Transaction[]
+
+  @@index([categoryId])
+  @@map("items")
+}
+
+
+
+enum ConditionStatus {
+  GOOD @map("good")
+  FAIR @map("fair")
+  POOR @map("poor")
+  DAMAGED @map("damaged")
+
+  @@map("condition_status")
+}
+
+model Transaction {
+  id Int @id @default(autoincrement())
+  itemId Int @map("item_id")
+  transactionType TransactionType @map("transaction_type")
+  quantity Int
+  referenceNumber String? @map("reference_number")
+  performedBy String? @map("performed_by")
+  reason String? @db.Text
+  transactionDate DateTime @default(now()) @map("transaction_date")
+
+  // Relations
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
+  @@map("transactions")
+}
+
+enum TransactionType {
+  IN @map("in")
+  OUT @map("out")
+  ADJUSTMENT @map("adjustment")
+
+  @@map("transaction_type")
+}
