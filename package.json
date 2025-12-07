@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend of Inventory System",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest"
   },
@@ -22,6 +23,8 @@
   },
   "homepage": "https://github.com/chuluq/kinderstation-inventory-system-be#readme",
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.1.0",
+    "@prisma/client": "^7.1.0",
     "bcrypt": "^6.0.0",
     "express": "^5.2.1",
     "winston": "^3.19.0",
@@ -34,11 +37,14 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
     "@types/supertest": "^6.0.3",
     "babel-jest": "^30.2.0",
+    "dotenv": "^17.2.3",
     "jest": "^30.2.0",
     "prisma": "^7.1.0",
     "supertest": "^7.1.4",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

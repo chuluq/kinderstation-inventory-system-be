@@ -7,13 +7,13 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "esnext",
-    "types": [],
+    "target": "es2023",
+    // "types": [],
     // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
+    "lib": ["esnext"],
+    "types": ["node"],
     // and npm install -D @types/node
 
     // Other Outputs
