@@ -15,6 +15,43 @@ servers:
 
 paths:
   ####################################################
+  # Authentication
+  ####################################################
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login into system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: JWT token
+                  token_type:
+                    type: string
+                    example: Bearer
+        "401":
+          description: Invalid username or password
+
+  ####################################################
   # Categories
   ####################################################
   /categories:
@@ -22,6 +59,8 @@ paths:
       tags:
         - Categories
       summary: Get all categories
+      security:
+        - BearerAuth: []
       responses:
         "200":
           description: List of categories
@@ -36,6 +75,8 @@ paths:
       tags:
         - Categories
       summary: Create a new category
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -55,6 +96,8 @@ paths:
       tags:
         - Categories
       summary: Get a category by ID
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -69,6 +112,8 @@ paths:
       tags:
         - Categories
       summary: Update a category
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       requestBody:
@@ -85,6 +130,8 @@ paths:
       tags:
         - Categories
       summary: Delete a category
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -99,6 +146,8 @@ paths:
       tags:
         - Items
       summary: Get all items
+      security:
+        - BearerAuth: []
       responses:
         "200":
           description: List of items
@@ -113,6 +162,8 @@ paths:
       tags:
         - Items
       summary: Create a new item
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -132,6 +183,8 @@ paths:
       tags:
         - Items
       summary: Get an item by ID
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -146,6 +199,8 @@ paths:
       tags:
         - Items
       summary: Update an item
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       requestBody:
@@ -162,6 +217,8 @@ paths:
       tags:
         - Items
       summary: Delete an item
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -176,6 +233,8 @@ paths:
       tags:
         - Transactions
       summary: Get all transactions
+      security:
+        - BearerAuth: []
       responses:
         "200":
           description: List of transactions
@@ -190,6 +249,8 @@ paths:
       tags:
         - Transactions
       summary: Create a transaction
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -209,6 +270,8 @@ paths:
       tags:
         - Transactions
       summary: Get transaction details
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -227,6 +290,8 @@ paths:
       tags:
         - Users
       summary: Get all users
+      security:
+        - BearerAuth: []
       responses:
         "200":
           description: List of users
@@ -241,6 +306,8 @@ paths:
       tags:
         - Users
       summary: Create a user
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -260,6 +327,8 @@ paths:
       tags:
         - Users
       summary: Get a user by ID
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: "#/components/parameters/IdParam"
       responses:
@@ -271,6 +340,15 @@ paths:
                 $ref: "#/components/schemas/User"
 
 components:
+  ####################################################
+  # SECURITY SCHEMES
+  ####################################################
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   ####################################################
   # REUSABLE PARAMETERS
   ####################################################
