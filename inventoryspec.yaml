@@ -50,6 +50,13 @@ paths:
                     example: Bearer
         "401":
           description: Invalid username or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 
   ####################################################
   # Categories
@@ -137,6 +144,15 @@ paths:
       responses:
         "204":
           description: Category deleted
+        "404":
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
 
   ####################################################
   # Items
