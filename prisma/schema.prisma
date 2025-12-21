@@ -18,16 +18,16 @@ model User {
   email String @unique @db.VarChar(50)
   password String 
   name String @db.VarChar(100)
-  role UserRole @default(VIEWER)
+  role UserRole @default(viewer)
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("users")
 }
 
 enum UserRole {
-  ADMIN @map("admin")
-  STAFF @map("staff")
-  VIEWER @map("viewer")
+  admin
+  staff
+  viewer
 
   @@map("role")
 }
@@ -54,7 +54,7 @@ model Item {
   unit String? @db.VarChar(50) // unit of measurement
   stock Int @default(0)
   location String? @db.VarChar(100)
-  conditionStatus ConditionStatus @default(GOOD) @map("condition_status")
+  conditionStatus ConditionStatus @default(good) @map("condition_status")
   purchaseDate DateTime? @map("purchase_date") @db.Date
   purchasePrice Decimal? @map("purchase_price") @db.Decimal(10, 2)
   supplier String? @db.VarChar(200)
@@ -73,10 +73,10 @@ model Item {
 
 
 enum ConditionStatus {
-  GOOD @map("good")
-  FAIR @map("fair")
-  POOR @map("poor")
-  DAMAGED @map("damaged")
+  good
+  fair
+  poor
+  damaged
 
   @@map("condition_status")
 }
@@ -99,9 +99,9 @@ model Transaction {
 }
 
 enum TransactionType {
-  IN @map("in")
-  OUT @map("out")
-  ADJUSTMENT @map("adjustment")
+  in
+  out
+  adjustment
 
   @@map("transaction_type")
 }
